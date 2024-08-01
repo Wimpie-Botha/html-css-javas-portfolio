@@ -227,6 +227,8 @@ section {
   padding: 1rem;
   width: 8rem;
   border-radius: 2rem;
+  position: relative; /* Added to ensure pseudo-elements are positioned correctly */
+  z-index: 0; /* Added to ensure pseudo-elements are behind the button text */
 }
 
 .btn-color-1,
@@ -259,6 +261,49 @@ section {
 
 .btn-container {
   gap: 1rem;
+}
+
+/* Rainbow Glow Effect */
+.btn::before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #FF0000, #FF7300, #FFFB00, #48FF00,
+    #00FFD5, #002BFF, #FF00C8, #FF0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 600%;
+  z-index: -1;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  filter: blur(8px);
+  animation: glowing 20s linear infinite;
+  transition: opacity .3s ease-in-out;
+  border-radius: 2rem;
+  opacity: 0;
+}
+
+@keyframes glowing {
+  0% {background-position: 0 0;}
+  50% {background-position: 400% 0;}
+  100% {background-position: 0 0;}
+}
+
+/* Hover effect for the rainbow glow */
+.btn:hover::before {
+  opacity: 1;
+}
+
+/* Active state */
+.btn:active:after {
+  background: transparent;
+}
+
+.btn:active {
+  color: #000;
+  font-weight: bold;
 }
 
 /* about */
@@ -400,6 +445,7 @@ article .icon {
   padding: 0.5rem;
 }
 
+
 .contact-info-container {
   display: flex;
   align-items: center;
@@ -430,3 +476,32 @@ footer {
 footer p {
   text-align: center;
 }
+/* Gradient Animation */
+@keyframes gradientHover {
+  0% {
+      background-position: 0% 50%;
+  }
+  100% {
+      background-position: 100% 50%;
+  }
+}
+
+/* Apply gradient effect on hover for text */
+.nav-links a:hover,
+.title:hover,
+.section__text__p1:hover {
+  background: linear-gradient(90deg, #570a5a 0%, #fad0c4 99%, #fad0c4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientHover 2s infinite;
+  background-size: 200% 200%;
+}
+
+/* Apply gradient effect on hover for buttons */
+.btn:hover,
+.btn-container .btn:hover {
+  background: linear-gradient(90deg, #700d6b 0%, #dd11bb 99%, #fc0404 100%);
+  animation: gradientHover 2s infinite;
+  background-size: 200% 200%;
+}
+
